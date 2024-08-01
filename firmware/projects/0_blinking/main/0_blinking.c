@@ -31,10 +31,10 @@ void app_main(void){
     LedsInit();
     while(true){
         printf("LED ON\n");
-        LedOn(LED_1);
+        LedOn(LED_3);
         vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
         printf("LED OFF\n");
-        LedOff(LED_1);
+        LedOff(LED_3);
         vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);
     }
 }
