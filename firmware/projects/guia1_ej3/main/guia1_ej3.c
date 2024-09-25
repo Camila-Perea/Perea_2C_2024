@@ -1,4 +1,4 @@
-/*! @mainpage Template
+/*! @mainpage guia1_ej3
  *
  * @section genDesc General Description
  *
