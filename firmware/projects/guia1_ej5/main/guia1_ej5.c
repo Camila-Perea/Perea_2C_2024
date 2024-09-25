@@ -1,8 +1,9 @@
-/*! @mainpage Template
+/*! @mainpage Guia_1_EJ5
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * Este programa tiene como función recibir un digito en BCD y un vector de estructuras del tipo gpioConf_t.
+ * Luego cambia el estado de cada GPIO, a ‘0’ o a ‘1’, según el estado del bit correspondiente en el BCD ingresado
  *
  * <a href="https://drive.google.com/...">Operation Example</a>
  *
@@ -11,8 +12,7 @@
  * |    Peripheral  |   ESP32   	|
  * |:--------------:|:--------------|
  * | 	PIN_X	 	| 	GPIO_X		|
- *
- *
+ * 
  * @section changelog Changelog
  *
  * |   Date	    | Description                                    |

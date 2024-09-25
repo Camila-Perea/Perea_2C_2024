@@ -1,6 +1,9 @@
-/*! @mainpage Template
+/*! @mainpage Guia_1_EJ4
  *
- * @section genDesc General Description
+ * @section Este programa tiene como función recibir un dato de 32 bits,
+ * la cantidad de dígitos de salida y un puntero a un arreglo donde se almacan los n dígitos
+ * Y convierte el dato recibido a BCD.
+ * 
  *
  * This section describes how the program works.
  *
@@ -17,7 +20,7 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 12/09/2023 | Document creation		                         |
+ * | 21/08/2024 | Document creation		                         |
  *
  * @author Camila Perea (camila.perea@uner.edu.ar)
  *
