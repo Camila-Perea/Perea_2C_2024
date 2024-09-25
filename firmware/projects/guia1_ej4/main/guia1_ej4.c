@@ -27,15 +27,18 @@
  */
 
 /*==================[inclusions]=============================================*/
+
 #include <stdio.h>
 #include <stdint.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data definition]===============================*/
 
 /*==================[internal functions declaration]=========================*/
+
 int8_t  convertToBcdArray (uint32_t data, uint8_t digits, uint8_t * bcd_number)
 {
 	for(int j=0; j<digits; j++)
@@ -47,6 +50,7 @@ int8_t  convertToBcdArray (uint32_t data, uint8_t digits, uint8_t * bcd_number)
 	}
 	return 0;
 }
+
 /*==================[external functions definition]==========================*/
 void app_main(void){
 	printf("Hello world!\n");
@@ -56,7 +60,6 @@ void app_main(void){
 
 	convertToBcdArray (data,digits,bcd_number);
 }
-
 
 
 /*==================[end of file]============================================*/
