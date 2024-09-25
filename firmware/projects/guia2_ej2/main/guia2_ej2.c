@@ -30,12 +30,15 @@
 /*==================[inclusions]=============================================*/
 #include <stdio.h>
 #include <stdint.h>
-#include "hc_sr04.h"
-#include "lcditse0803.h"
-#include <led.h>
 #include <stdbool.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "led.h"
+#include "switch.h"
+#include "math.h"
+#include "gpio_mcu.h"
+#include "hc_sr04.h"
+#include "lcditse0803.h"
 #include "switch.h"
 #include "timer_mcu.h"
 
@@ -53,8 +56,11 @@ bool on=true;
 /**Si es TRUE congela el valor que se muestra por display.*/
 bool hold=false;
 
-/**Periodo al que quiero que se muestre la distancia.*/
-#define CONFIG_BLINK_PERIOD 1000000
+/** Periodo de la interrupción del temporizador A en microsegundos.*/
+#define CONFIG_BLINK_PERIOD1 1000000
+
+/** Periodo de la interrupción del temporizador B en microsegundos.*/
+#define CONFIG_BLINK_PERIOD 500000
 
 TaskHandle_t medir_task_handle = NULL;
 TaskHandle_t leds_task_handle = NULL;
@@ -152,12 +158,11 @@ void MedirTask(void *pvParameter)
 {
 	while(1) 
 	{
-		printf ("midiendo\n\r");
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY); 
 		if(on==true)
 			distancia=HcSr04ReadDistanceInCentimeters();
 		else
 			LedsOffAll();
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY); 
 	}
 }
 
@@ -165,11 +170,12 @@ void DisplayTask(void *pvParameter)
 {
 	while(1) 
 	{
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY); 
 		printf ("mostrar\n\r");
 		if(on==true)
 		{
 			LedsTask();
-			if(hold!=true)
+			if(!hold)
 			{
 			LcdItsE0803Write(distancia);
 			}
@@ -179,7 +185,6 @@ void DisplayTask(void *pvParameter)
 			LedsOffAll();
 			LcdItsE0803Off();
 		}
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY); 
 	}
 }
 
@@ -195,19 +200,18 @@ void Congelar()
 
 void app_main(void)
 {
-HcSr04Init(GPIO_3, GPIO_2);
+	HcSr04Init(GPIO_3, GPIO_2);
 	LedsInit();
 	LedsOffAll();
 	SwitchesInit();
 	LcdItsE0803Init();
-
 	SwitchActivInt(SWITCH_1, CambiarEstado, NULL);
 	SwitchActivInt(SWITCH_2, Congelar, NULL);
 	
 	/* Inicialización de timers */
     timer_config_t timer_medir = {
         .timer = TIMER_A,
-        .period = CONFIG_BLINK_PERIOD,
+        .period = CONFIG_BLINK_PERIOD1,
         .func_p = FuncTimer,//puntero a la funcion que quiero q se ejecute x interrupcion
 		.param_p = NULL
     };
@@ -221,8 +225,8 @@ HcSr04Init(GPIO_3, GPIO_2);
     TimerInit(&timer_mostrar);
 
 /// creación de las tareas que quiero ejecutar 
-	xTaskCreate(&MedirTask, "Medir", 2048, NULL, 4, &medir_task_handle);
-	xTaskCreate(&DisplayTask, "Display", 2048, NULL, 4, &display_task_handle);
+	xTaskCreate(&MedirTask, "Medir", 2048, NULL, 5, &medir_task_handle);
+	xTaskCreate(&DisplayTask, "Display", 512, NULL, 5, &display_task_handle);
 
 /* Inicialización del conteo de timers */
 	TimerStart(timer_medir.timer);
