@@ -7,7 +7,6 @@
  *Uno  de estos vectores mapea los bits y el otro los puertos con el dígito del LCD a donde mostrar un dato.
  *El programa muestra por el display el valor que recibe mostrarEnDisplay.
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
  *
  * @section hardConn Hardware Connection
  *
@@ -34,6 +33,7 @@
  */
 
 /*==================[inclusions]=============================================*/
+
 #include <stdio.h>
 #include <stdint.h>
 #include "freertos/FreeRTOS.h"
@@ -106,17 +106,6 @@ int8_t  convertToBcdArray (uint32_t data, uint8_t digits, uint8_t * bcd_number)
 	return 0;
 }
 
-void mappearBits( uint8_t digit, gpioConf_t* vector_pines )
-{
-	for (int j=0; j<4; j++)
-	{
-		if(digit&1<<j)
-			{GPIOOn(vector_pines[j].pin);}
-		else
-			GPIOOff(vector_pines[j].pin);
-	}
-}
-
 void mostrarEnDisplay(uint32_t data, uint8_t digits, gpioConf_t *vector_pines, gpioConf_t *vector_puertos)
 {
 	for(uint8_t i=0; i<4; i++){
@@ -129,6 +118,17 @@ void mostrarEnDisplay(uint32_t data, uint8_t digits, gpioConf_t *vector_pines, g
 		mappearBits (arreglo[i], vector_pines);
 		GPIOOn(vector_puertos[i].pin);
 		GPIOOff(vector_puertos[i].pin);
+	}
+}
+
+void mappearBits( uint8_t digit, gpioConf_t* vector_pines )
+{
+	for (int j=0; j<4; j++)
+	{
+		if(digit&1<<j)
+			{GPIOOn(vector_pines[j].pin);}
+		else
+			GPIOOff(vector_pines[j].pin);
 	}
 }
 
