@@ -4,7 +4,6 @@
  *Este programa tiene como función leer la distancia que mide un sensor y mostrarla por display. Ademas cambia los leds que estan prendidos o
  *apagados dependiendo que valor tiene esa distancia. Por otro lado tambien realiza determinadas acciones según apreto una tecla u otra.
  * 
- * <a href="https://drive.google.com/...">Operation Example</a>
  *
  * @section hardConn Hardware Connection
  *
