@@ -11,8 +11,8 @@
  *
  * @section hardConn Hardware Connection
  *
- * | Peripheral   | ESP32   |
- * |:-------------|:--------|
+ * | Peripheral    | ESP32   |
+ * |:------------- |:--------|
  * | SENSOR_TRIG   | GPIO_3  |
  * | SENSOR_ECHO   | GPIO_2  |
  * | SWITCH_1      | GPIO_X  |
@@ -250,10 +250,6 @@ void CambiarEstado(void *param)
 
 /*==================[external functions definition]==========================*/
 
- /**Función principal que inicializa el sistema y las tareas de FreeRTOS.
-  Configura los LEDs, los interruptores, la pantalla LCD y el sensor HC-SR04. 
-  Luego crea las tareas de FreeRTOS para medir la distancia y mostrar la distancia en la pantalla LCD.
- */
 void app_main(void)
 {
 	LedsInit();
