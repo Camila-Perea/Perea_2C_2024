@@ -69,13 +69,22 @@ TaskHandle_t display_task_handle = NULL;
 /*==================[internal data definition]===============================*/
 
 /*==================[internal functions declaration]=========================*/
+
 /**
- * @fn static void FuncTimer(void *pvParameter);
+ * @fn static void FuncTimerA(void *pvParameter);
  * @brief Notifica cada tarea cuando debe ser interrumpida.
  * @param[in] void *pvParameter
  * @return 
 */
-void FuncTimer(void* param);
+void FuncTimerA(void* param);
+
+/**
+ * @fn static void FuncTimerB(void *pvParameter);
+ * @brief Función invocada en la interrupción del timer B
+ * @param[in] void *pvParameter
+ * @return
+ */
+void FuncTimerB(void* param);
 
 /**
  * @fn static void MedirTask(void *pvParameter);
@@ -119,11 +128,15 @@ void Congelar();
 
 /*==================[external functions definition]==========================*/
 
-void FuncTimer(void* param)
+void FuncTimerA(void* param)
 {
-    vTaskNotifyGiveFromISR(leds_task_handle, pdFALSE);//le manda una notif a la tarea (se usa el handle no el nombre de la tarea)
+    //le manda una notif a la tarea (se usa el handle no el nombre de la tarea)
 	vTaskNotifyGiveFromISR(medir_task_handle, pdFALSE);
-    vTaskNotifyGiveFromISR(display_task_handle, pdFALSE);
+}
+
+void FuncTimerB(void* param)
+{
+    vTaskNotifyGiveFromISR(display_task_handle, pdFALSE);    /* Envía una notificación a la tarea asociada al LED_2 */
 }
 
 void LedsTask()
@@ -171,7 +184,6 @@ void DisplayTask(void *pvParameter)
 	while(1) 
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY); 
-		printf ("mostrar\n\r");
 		if(on==true)
 		{
 			LedsTask();
@@ -209,27 +221,28 @@ void app_main(void)
 	SwitchActivInt(SWITCH_2, Congelar, NULL);
 	
 	/* Inicialización de timers */
-    timer_config_t timer_medir = {
+   LedsInit();
+	timer_config_t timer_led_1 = {
         .timer = TIMER_A,
-        .period = CONFIG_BLINK_PERIOD1,
-        .func_p = FuncTimer,//puntero a la funcion que quiero q se ejecute x interrupcion
-		.param_p = NULL
-    };
-    TimerInit(&timer_medir);
-    timer_config_t timer_mostrar = {
-        .timer = TIMER_B,
         .period = CONFIG_BLINK_PERIOD,
-        .func_p = FuncTimer,//puntero a la funcion que quiero q se ejecute x interrupcion
-		.param_p = NULL
+        .func_p = FuncTimerA,
+        .param_p = NULL
     };
-    TimerInit(&timer_mostrar);
+    TimerInit(&timer_led_1);
+    timer_config_t timer_led_2 = {
+        .timer = TIMER_B,
+        .period = CONFIG_BLINK_PERIOD1,
+        .func_p = FuncTimerB,
+        .param_p = NULL
+    };
+    TimerInit(&timer_led_2);
 
 /// creación de las tareas que quiero ejecutar 
 	xTaskCreate(&MedirTask, "Medir", 2048, NULL, 5, &medir_task_handle);
 	xTaskCreate(&DisplayTask, "Display", 512, NULL, 5, &display_task_handle);
 
 /* Inicialización del conteo de timers */
-	TimerStart(timer_medir.timer);
-	TimerStart(timer_mostrar.timer);
+	TimerStart(timer_led_1.timer);
+ TimerStart(timer_led_2.timer);
 }
 /*==================[end of file]============================================*/
