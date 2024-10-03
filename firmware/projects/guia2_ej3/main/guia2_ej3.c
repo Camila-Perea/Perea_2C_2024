@@ -1,6 +1,7 @@
 /*! @mainpage Guia2_ej3
  *
- * @section Este programa utiliza FreeRTOS para gestionar tareas relacionadas con la medición de distancia utilizando 
+ * @section General Description
+ * Este programa utiliza FreeRTOS para gestionar tareas relacionadas con la medición de distancia utilizando 
  * un sensor ultrasónico HC-SR04 y el control de LEDs y una pantalla LCD. 
  * El sistema está diseñado para utilizar temporizadores y notificaciones de tareas para gestionar 
  * la medición de distancia y la actualización de la pantalla LCD basada en eventos de temporizador.
