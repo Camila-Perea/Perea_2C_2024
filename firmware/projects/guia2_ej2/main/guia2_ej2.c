@@ -1,6 +1,7 @@
 /*! @mainpage TC: Guia2_Ej2
  *
  * @section genDesc General Description
+ * 
  * Este programa tiene como función leer la distancia que mide un sensor y mostrarla por display. Ademas cambia los leds que estan prendidos o
  * apagados dependiendo que valor tiene esa distancia. Por otro lado tambien realiza determinadas acciones según apreto una tecla u otra.
  * Todas estas funciones se realizan a traves de tareas y a un determinado periodo, definido con un timer.
