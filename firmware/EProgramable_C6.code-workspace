@@ -41,6 +41,24 @@
         },
         {
             "path": "projects/guia2_ej4"
+        },
+        {
+            "path": "projects/proyecto_final"
+        },
+        {
+            "path": "middelware"
+        },
+        {
+            "path": "projects/ej_bluetooth_ledrgb"
+        },
+        {
+            "path": "projects/microcontroller"
+        },
+        {
+            "path": "projects/controlleds"
+        },
+        {
+            "path": "projects/examen"
         }
     ],
     "settings": {

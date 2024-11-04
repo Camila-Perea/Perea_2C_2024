@@ -244,6 +244,6 @@ void app_main(void)
 
 /* Inicialización del conteo de timers */
 	TimerStart(timer_led_1.timer);
- TimerStart(timer_led_2.timer);
+    TimerStart(timer_led_2.timer);
 }
 /*==================[end of file]============================================*/
