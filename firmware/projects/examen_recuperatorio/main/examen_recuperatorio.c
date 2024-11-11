@@ -34,8 +34,10 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 /*==================[macros and definitions]=================================*/
-/** Periodo de la interrupción del temporizador de la medición. */
+/** Periodo de la interrupción del temporizador de la medición de la distancia. */
 #define CONFIG_BLINK_PERIOD 100000
+/** Periodo de la interrupción del temporizador de la medición de peso. */
+#define CONFIG_BLINK_PERIOD_PES0 100000
 TaskHandle_t medir_task_handle = NULL;
 
 /*==================[internal data definition]===============================*/
@@ -45,8 +47,10 @@ bool on = true;
 uint16_t distancia;
 /** Variable que almacena la velocidad calculada.*/
 float velocidad;
-/**Me guarda el valor de voltaje que me da la balanza*/
+/**Me guarda el valor que me da la balanza*/
 uint16_t valor_sensado;
+/**Me guarda el valor del peso*/
+uint16_t peso;
 
 /*==================[internal functions declaration]=========================*/
 
@@ -57,13 +61,25 @@ void FuncTimerDistancia(void* param){
     vTaskNotifyGiveFromISR(medir_task_handle, pdFALSE); 
 }
 
+void MostrarMensaje()
+{
+	UartSendString(UART_PC, "Peso: \r\n");
+	UartSendString(UART_PC, (char*)UartItoa(peso, 10));
+	UartSendString(UART_PC, " \r");
+	UartSendString(UART_PC, "Velocidad: \r\n");
+	UartSendString(UART_PC, (char*)UartItoa(velocidad, 10));
+	UartSendString(UART_PC, " \r");
+}
+
 void Pesar()
 {
-	AnalogInputReadSingle(CH1, &valor_sensado);
+	for(int i=0; i<50; i++)
+	{
+		AnalogInputReadSingle(CH1, &valor_sensado);
+		
+		vTaskDelay(100 / portTICK_PERIOD_MS);
 
-	UartSendString(UART_PC, "Peso: \r\n");
-	UartSendString(UART_PC, "Velocidad: \r\n");
-
+	}
 
 }
 
@@ -116,6 +132,25 @@ void app_main(void){
         .func_p = FuncTimerDistancia,
         .param_p = NULL
     };
+
+	serial_config_t my_uart = {
+		.port = UART_PC, 
+		.baud_rate = 115200, 
+		.func_p = NULL, 
+		.param_p = NULL
+	};
+	UartInit(&my_uart);
+
+	analog_input_config_t analog = 
+	{
+		.input = CH1, //le paso el canal
+		.mode = ADC_SINGLE,
+		.func_p = NULL,
+		.param_p = NULL,
+		.sample_frec = 0
+	};
+	AnalogInputInit(&analog);
+	AnalogOutputInit();
 
     TimerInit(&timer_medir_distancia);
 	xTaskCreate(&MedirDistancia, "distancia_task_handle", 2048, NULL, 5, NULL);
