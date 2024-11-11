@@ -77,6 +77,8 @@ float galga_2 = 0;
 float promedio_1 = 0;
 /**Me guarda el valor del peso promedio de la galga 2*/
 float promedio_2 = 0;
+/** Variable que almacena la velocidad maxima medida en m/s.*/
+float velocidadmax;
 
 /*==================[internal functions declaration]=========================*/
 
@@ -113,7 +115,7 @@ void MostrarMensaje()
 	UartSendString(UART_PC, (char*)UartItoa(peso, 10));
 	UartSendString(UART_PC," kg\n");
 	UartSendString(UART_PC, "Velocidad: \r\n");
-	UartSendString(UART_PC, (char*)UartItoa(velocidad, 10));
+	UartSendString(UART_PC, (char*)UartItoa(velocidadmax, 10));
 	UartSendString(UART_PC," m/s\n");
 }
 
@@ -157,6 +159,12 @@ void CalcularVelocidad()
 	float aux = 0;
 	velocidad = (distancia*100)-(distanciaAnterior*100)/(0.1); // Velocidad en m/s
 	distanciaAnterior= distancia;
+
+	if(velocidad>aux)
+			{
+				velocidadmax=velocidad;
+				velocidadmax=aux;
+			}
 }
 
 /**
