@@ -33,6 +33,7 @@
 #include "analog_io_mcu.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "math.h"
 /*==================[macros and definitions]=================================*/
 /** Periodo de la interrupción del temporizador de la medición de la distancia. */
 #define CONFIG_BLINK_PERIOD 100000
@@ -47,10 +48,20 @@ bool on = true;
 uint16_t distancia;
 /** Variable que almacena la velocidad calculada.*/
 float velocidad;
-/**Me guarda el valor que me da la balanza*/
-uint16_t valor_sensado;
-/**Me guarda el valor del peso*/
+/**Me guarda el valor que me da la galga 1*/
+uint16_t valor_sensado_1;
+/**Me guarda el valor que me da la galga 2*/
+uint16_t valor_sensado_2;
+/**Me guarda el valor del peso total*/
 uint16_t peso;
+/**Me guarda el valor del peso que lee el canal 1*/
+float galga_1 = 0;
+/**Me guarda el valor del peso que lee el canal 2*/
+float galga_2 = 0;
+/**Me guarda el valor del peso promedio de la galga 1*/
+float promedio_1 = 0;
+/**Me guarda el valor del peso promedio de la galga 2*/
+float promedio_2 = 0;
 
 /*==================[internal functions declaration]=========================*/
 
@@ -75,15 +86,28 @@ void Pesar()
 {
 	for(int i=0; i<50; i++)
 	{
-		AnalogInputReadSingle(CH1, &valor_sensado);
-		
-		vTaskDelay(100 / portTICK_PERIOD_MS);
+		//Leo el voltaje que mide cada galga en su respectivo canal
+		AnalogInputReadSingle(CH1, &valor_sensado_1);
+		AnalogInputReadSingle(CH2, &valor_sensado_2);
+
+		//Tomo el valor de voltaje sensado, lo guardo y le voy sumando el valor de cada medición
+		galga_1 += (valor_sensado_1*20000)/3000;
+		galga_2 += (valor_sensado_2*20000)/3000;
+
+		//Calculo del promedio
+		promedio_1= galga_1/50;
+		promedio_2= galga_2/50;
+
+		//El peso total es la suma de los promedios de ambas galgas
+		peso = promedio_1 + promedio_2;
+
+		vTaskDelay(5/ portTICK_PERIOD_MS); //tasa de 200 muestras por segundo
 
 	}
 
 }
 
-void CalcularVelodidad()
+void CalcularVelocidad()
 {
 	velocidad=distancia/CONFIG_BLINK_PERIOD;
 	if (velocidad>3)
@@ -98,7 +122,7 @@ void CalcularVelodidad()
 		LedOn(LED_2);
 		LedOff(LED_3);
 	}
-	else if(velocidad=0)
+	else if(velocidad==0)
 	{ 
 		LedOff(LED_1);
 		LedOff(LED_2);
@@ -119,7 +143,6 @@ void MedirDistancia(void *pvParameter)
 			CalcularVelocidad();
 		}
 
-			
 	}
 }
 
@@ -141,15 +164,26 @@ void app_main(void){
 	};
 	UartInit(&my_uart);
 
-	analog_input_config_t analog = 
+	analog_input_config_t analog_1 = 
 	{
-		.input = CH1, //le paso el canal
+		.input = CH1,
 		.mode = ADC_SINGLE,
 		.func_p = NULL,
 		.param_p = NULL,
 		.sample_frec = 0
 	};
-	AnalogInputInit(&analog);
+	AnalogInputInit(&analog_1);
+
+	analog_input_config_t analog_2 = 
+	{
+		.input = CH2,
+		.mode = ADC_SINGLE,
+		.func_p = NULL,
+		.param_p = NULL,
+		.sample_frec = 0
+	};
+	AnalogInputInit(&analog_2);
+
 	AnalogOutputInit();
 
     TimerInit(&timer_medir_distancia);
