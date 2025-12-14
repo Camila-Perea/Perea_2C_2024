@@ -15,12 +15,12 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
+#include <stdio.h>               // para printf
+#include <stdint.h>              // para tipos de enteros estandar
+#include <stdbool.h> 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "led.h"
+#include "led.h"				// driver para los LED
 #include "switch.h"
 /*==================[macros and definitions]=================================*/
 #define CONFIG_BLINK_PERIOD_1 500
@@ -36,7 +36,10 @@ void app_main(void){
 	LedsInit();
 	SwitchesInit();
     while(1)    {
-    	teclas  = SwitchesRead();
+    	teclas  = SwitchesRead();  // empaqueta el estado de todos los switches en un mask,
+		                           // La máscara de bits se usa porque es una forma eficiente y 
+								   // compacta de representar el estado de varios switches 
+								   // (o señales digitales) en una sola variable.
 		//prinTF ("teclas %d\r\n", teclas);
     	switch(teclas){
     		case SWITCH_1:
