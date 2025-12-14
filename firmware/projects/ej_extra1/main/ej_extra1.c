@@ -175,7 +175,7 @@ void medirTemperatura(void *pvParameter)
 	    }	
 
 	    // MESAJES POR LA UART
-		mensaje;
+		mensaje(promedio, distancia);
 
 		if (temperatura < TEMP_OBJEIVO )
 		{
@@ -193,12 +193,14 @@ void medirTemperatura(void *pvParameter)
  * @brief  
  * @param .void *pvParameter
  */
-void mensaje(void *pvParameter){
+void mensaje(promedio, distancia){
 
 	UartSendString(UART_PC, (char *) UartItoa(promedio, 10));
     UartSendString(UART_PC, "Cº");
 	UartSendString(UART_PC, (char *) UartItoa(distancia, 10));
     UartSendString(UART_PC, "cm\r\n");
+
+
 }
 
 /*==================[external functions definition]==========================*/
@@ -234,13 +236,12 @@ void app_main(void){
 	GPIOInit(GPIO_ALARMA, GPIO_OUTPUT);
 
 	LedsInit();
-
 	
 	serial_config_t pantalla = 
 	{
 		.port = UART_PC,
 		.baud_rate = 9600,
-		.func_p = mensaje,
+		.func_p = NULL,
 		.param_p = NULL,
 	};
 
