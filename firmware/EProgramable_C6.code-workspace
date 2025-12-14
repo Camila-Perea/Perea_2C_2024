@@ -59,6 +59,9 @@
         },
         {
             "path": "projects/examen"
+        },
+        {
+            "path": "projects/ej_extra1"
         }
     ],
     "settings": {
