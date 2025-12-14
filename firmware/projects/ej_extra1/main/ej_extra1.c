@@ -175,10 +175,7 @@ void medirTemperatura(void *pvParameter)
 	    }	
 
 	    // MESAJES POR LA UART
-		UartSendString(UART_PC, (char *) UartItoa(promedio, 10));
-        UartSendString(UART_PC, "Cº");
-        UartSendString(UART_PC, (char *) UartItoa(distancia, 10));
-        UartSendString(UART_PC, "cm\r\n");
+		mensaje;
 
 		if (temperatura < TEMP_OBJEIVO )
 		{
@@ -191,6 +188,19 @@ void medirTemperatura(void *pvParameter)
 	}
     }
 }
+
+/** @fn  void medirTemperatura(void *pvParameter)
+ * @brief  
+ * @param .void *pvParameter
+ */
+void mensaje(void *pvParameter){
+
+	UartSendString(UART_PC, (char *) UartItoa(promedio, 10));
+    UartSendString(UART_PC, "Cº");
+	UartSendString(UART_PC, (char *) UartItoa(distancia, 10));
+    UartSendString(UART_PC, "cm\r\n");
+}
+
 /*==================[external functions definition]==========================*/
 void app_main(void){
 
@@ -224,6 +234,18 @@ void app_main(void){
 	GPIOInit(GPIO_ALARMA, GPIO_OUTPUT);
 
 	LedsInit();
+
+	
+	serial_config_t pantalla = 
+	{
+		.port = UART_PC,
+		.baud_rate = 9600,
+		.func_p = mensaje,
+		.param_p = NULL,
+	};
+
+	UartInit(&pantalla);
+
 
 xTaskCreate(&medirDistancia, "medir distancias", 2048, NULL, 5, &task_handle); 
 xTaskCreate(&medirTemperatura, "medir temperatura", 2048, NULL, 5, &task_handle2); 
