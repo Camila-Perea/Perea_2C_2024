@@ -1,0 +1,25 @@
+var ej__extra2_8c =
+[
+    [ "CONFIG_BLINK_PERIOD_ACELEROMETRO", "ej__extra2_8c.html#a6f319253af1944e897799d33e5f91f3e", null ],
+    [ "CONFIG_BLINK_PERIOD_SENSADO", "ej__extra2_8c.html#a267ee53eda04faf46cac48e58be2fb32", null ],
+    [ "GPIO_ALARMA", "ej__extra2_8c.html#a2d4ea99cb71174b1dac253eb07b4366e", null ],
+    [ "Acelerometro", "ej__extra2_8c.html#a3a195cc23fc527c36ee53184455dbab5", null ],
+    [ "app_main", "ej__extra2_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70", null ],
+    [ "Buzzer", "ej__extra2_8c.html#acbfde99d0dc87882bb25431a375c0e65", null ],
+    [ "FuncTimerA", "ej__extra2_8c.html#afaccfed84cd1498a05ea04a65f1209b1", null ],
+    [ "FuncTimerB", "ej__extra2_8c.html#a5088c3325764095ca222dc78c328f466", null ],
+    [ "Leds", "ej__extra2_8c.html#aec8a021d6725b8a692697d31cd589efd", null ],
+    [ "MedirDistancia", "ej__extra2_8c.html#aaa35c079f13feb107aaa3a9f3db0bde6", null ],
+    [ "MostrarMensaje", "ej__extra2_8c.html#a372419d813f9cca424b23123b5863ac3", null ],
+    [ "acelerometro_task_handle", "ej__extra2_8c.html#a3466cd0e43837d57ca5c523cb468f0f2", null ],
+    [ "buzzer_task_handle", "ej__extra2_8c.html#a3ca281fed7f9b5baacfef6f44eb15fee", null ],
+    [ "data_X", "ej__extra2_8c.html#a1340ed1f99f8242897026bd9072a6f73", null ],
+    [ "data_Y", "ej__extra2_8c.html#affabca8545e450ecdcabff456643f415", null ],
+    [ "data_Z", "ej__extra2_8c.html#af3faa7c82f3472b5b0e25e6248b464c7", null ],
+    [ "distancia", "ej__extra2_8c.html#aec40b15ff3098bdb2425eb4dc9c11a18", null ],
+    [ "leds_task_handle", "ej__extra2_8c.html#a23fa2e6a8b0cbaf464c822d101153441", null ],
+    [ "medir_distancia_task_handle", "ej__extra2_8c.html#af22a0206bbf6b359e387932f7279d4a2", null ],
+    [ "on", "ej__extra2_8c.html#aaa928c9a62449f7946da1e32f66c70d2", null ],
+    [ "suma", "ej__extra2_8c.html#aeaffbbb5818dfcf9a0ea6caa5c3cb9c6", null ],
+    [ "valor_sensado", "ej__extra2_8c.html#a044e1ae3c5d20ae2ab92e79a25a844c1", null ]
+];
