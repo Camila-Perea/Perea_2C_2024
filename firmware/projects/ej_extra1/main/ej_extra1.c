@@ -152,40 +152,53 @@ void medirDistancia(void *pvParameter)
 void medirTemperatura(void *pvParameter)
 {
 	uint16_t temperatura_mV;
-	uint16_t temperatura;
-
-	int numMediciones = 10;
-    float mediciones[numMediciones];
-	float suma = 0.0;
+   	float temperatura;
+    static uint8_t contador = 0;
+    static float suma = 0.0;
 
 	while (1)
-	{
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    {
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
-    if (distancia >=8 && distancia <=12)
-	{
-		AnalogInputReadSingle(SENSOR_TEMPERATURA, &temperatura_mV); 
-		temperatura = ConvertirVoltajeATemperatura(temperatura_mV);
+        if (distancia >= 8 && distancia <= 12)
+        {
+            /* Tomo UNA medición */
+            AnalogInputReadSingle(SENSOR_TEMPERATURA, &temperatura_mV);
+            temperatura = ConvertirVoltajeATemperatura(temperatura_mV);
 
-		 for(int i = 0; i < numMediciones; i++)
-		{
-        mediciones[i] = temperatura;
-		suma += mediciones[i];
-		float promedio = suma / numMediciones;
-	    }	
+            /* Acumulo */
+            suma += temperatura;
+            contador++;
 
-	    // MESAJES POR LA UART
-		mensaje(promedio, distancia);
+            /* ¿Ya tengo 10 mediciones? */
+            if (contador >= 10)
+            {
+                float promedio = suma / 10.0;
 
-		if (temperatura < TEMP_OBJEIVO )
-		{
-			desactivarAlarma();
-		}
-		else if (temperatura > TEMP_OBJEIVO)
-		{
-			activarAlarma();
-		}
-	}
+                /* Envío por UART */
+                mensaje(promedio, distancia);
+
+                /* Alarma */
+                if (promedio < TEMP_OBJEIVO)
+                {
+                    desactivarAlarma();
+                }
+                else
+                {
+                    activarAlarma();
+                }
+
+                /* Reinicio para el próximo ciclo */
+                suma = 0.0;
+                contador = 0;
+            }
+        }
+        else
+        {
+            /* Si se sale del rango, reinicio el acumulador */
+            suma = 0.0;
+            contador = 0;
+        }
     }
 }
 
