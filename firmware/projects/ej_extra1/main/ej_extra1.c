@@ -231,7 +231,7 @@ void app_main(void){
 
 	TimerStart(timer_1.timer); // para que comience el timer 1
 	TimerStart(timer_2.timer); // para que comience el timer 2
-
+	AnalogInputInit(&analog_input);
 	HcSr04Init(GPIO_20, GPIO_21); 
 	GPIOInit(GPIO_ALARMA, GPIO_OUTPUT);
 

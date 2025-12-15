@@ -62,6 +62,9 @@
         },
         {
             "path": "projects/ej_extra1"
+        },
+        {
+            "path": "projects/ej_extra2"
         }
     ],
     "settings": {
