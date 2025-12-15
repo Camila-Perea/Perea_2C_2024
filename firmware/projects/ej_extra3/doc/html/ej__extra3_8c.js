@@ -1,0 +1,28 @@
+var ej__extra3_8c =
+[
+    [ "GPIO_BOMBA", "ej__extra3_8c.html#af6aaeea49bac11924cbeb98494c55e93", null ],
+    [ "RESISTENCIA_CALEFACTORA", "ej__extra3_8c.html#a9783eb1d855fdca5192039ff97352671", null ],
+    [ "SENSOR_TEMPERATURA", "ej__extra3_8c.html#a9149ebdc510ad10250adf613e9453c51", null ],
+    [ "TEMP_OBJEIVO", "ej__extra3_8c.html#a47ff87fe3534ae5791f138a8d78f0a27", null ],
+    [ "TEMPERATURA_MAX", "ej__extra3_8c.html#a285e195ec8b4bc2321c5f906d98206ee", null ],
+    [ "TEMPERATURA_MIN", "ej__extra3_8c.html#a2ee75b418485729e8dff4e7f4f8122e4", null ],
+    [ "TIME_PERIOD1", "ej__extra3_8c.html#add2de5ccb3a950d73896132527241918", null ],
+    [ "TIME_PERIOD2", "ej__extra3_8c.html#a876d7471ff8174ea6fa390ba5d29e8c0", null ],
+    [ "VOLTAJE_MAX", "ej__extra3_8c.html#a8e1431ba4d78678909016328c528f845", null ],
+    [ "VOLTAJE_MIN", "ej__extra3_8c.html#a3f6b7393a0541a11d130c6d3abc6b924", null ],
+    [ "app_main", "ej__extra3_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70", null ],
+    [ "calentarAgua", "ej__extra3_8c.html#a9252cd35dbe0d206d921888ebbc2e4ed", null ],
+    [ "Control_temperatura", "ej__extra3_8c.html#a024f06886c41aee52635c0a944ac7f95", null ],
+    [ "ConvertirVoltajeATemperatura", "ej__extra3_8c.html#a68927a4ea0d5880d3baf2e3fccb60647", null ],
+    [ "dispensarAgua", "ej__extra3_8c.html#a433f975872e35910bc9ab1bda98fd149", null ],
+    [ "FunctionStart", "ej__extra3_8c.html#a0febcf7c0dda3de61859f3046a104fc2", null ],
+    [ "FunctionStop", "ej__extra3_8c.html#a373f69ff466067736504ca6109f0d204", null ],
+    [ "noCalentarAgua", "ej__extra3_8c.html#a019e1410c0435b1ececc8b912b5436aa", null ],
+    [ "noDispensarAgua", "ej__extra3_8c.html#a32a40b273cbf2ca83d27f74a10b1b008", null ],
+    [ "Notify1", "ej__extra3_8c.html#a3559317c191c7277896f7f2c59fe5327", null ],
+    [ "Notify2", "ej__extra3_8c.html#abb011490fb841ed86a33f1d1b6c149bb", null ],
+    [ "Suministro_agua", "ej__extra3_8c.html#a976611aa785a73fcd98b723ad076f883", null ],
+    [ "start", "ej__extra3_8c.html#ab376b87f96a574a793c03c53e75afec8", null ],
+    [ "task_handle1", "ej__extra3_8c.html#a1fcdb8ca24c526a411a722da9e119ec5", null ],
+    [ "task_handle2", "ej__extra3_8c.html#a2310c66f510ad4d0c05f78f4d3101f28", null ]
+];
