@@ -46,6 +46,7 @@
 #include "analog_io_mcu.h"
 #include "gpio_mcu.h"
 #include "switch.h"
+
 /*==================[macros and definitions]=================================*/
 /**Tiempo en el que se debe realizar una medicion de la cantidad de agua y alimento */
 #define TIME_MEDICION     5000000 // 5 segundos 
