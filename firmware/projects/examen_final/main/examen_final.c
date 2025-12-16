@@ -22,7 +22,6 @@
  * |     LED_1      |    GPIO_11    |
  * |   GPIO_AGUA    |    GPIO_20    |
  * | GPIO_ALIMENTO  |    GPIO_21    |
-
  * 
  *
  * @section changelog Changelog
@@ -156,7 +155,7 @@ void app_main(void)
     GPIOInit(GPIO_AGUA, GPIO_OUTPUT);
     GPIOInit(GPIO_ALIMENTO, GPIO_OUTPUT);
 
-    LedInit();
+    LedsInit();
 
     SwitchesInit();
     SwitchActivInt(SWITCH_1, Tecla1_ISR, NULL);
